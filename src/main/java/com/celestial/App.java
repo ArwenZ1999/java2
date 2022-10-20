@@ -1,5 +1,6 @@
 package com.celestial;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -14,6 +15,11 @@ public class App
     {
 	
     	
+    	ArrayList lines = new ArrayList(10);//garbage collection automatially
+    	
+    	
+    	
+    	
     	System.out.print("Enter the price, enter quit to exit:");
     	String lineRead;
         Scanner sc = new Scanner(System.in);
@@ -21,49 +27,28 @@ public class App
         String[] prices=new String[growBy];//create an array; static array
         try
         {        
-            for (int x =0;(x<prices.length && prompt() && ( lineRead=sc.next())!=null);x++)
+            while ( prompt() && ( lineRead=sc.next())!=null)
             {
             	if(lineRead.equalsIgnoreCase("quit"))
             		break;
-            	prices[x]=lineRead;
+            	lines.add(lineRead);//arraylist add prices 
             	System.out.println(lineRead);
-            	if(x==prices.length-1)        	
-            		//the purpose of copyof is 
-            		prices= Arrays.copyOf(prices, prices.length+growBy);         	
+            	
             }
         }catch( NoSuchElementException e )
-        {}
-        //error1: cannot convert null to double 
-       // double[] doubleValues = Arrays.stream(prices)
-            //    .mapToDouble(Double::parseDouble)
-           //     .toArray();
-    	
-    	String[] SlicedPrices=new String[prices.length-1];
-
-      ///////get rid of null   	
-
-        for(int z=0;z<prices.length-1;z++)
+        {}	
+    	//String[] SlicedPrices=new String[prices.length-1];
+        int lineNo=0; //declear all the varibales on the top 
+        //lines.forEach(line->{//->lamda forbid to modify the code outside the scoop
+        	//System.out.println(++lineNo+":"+line);
+        //});
+    	for(var line:lines)
     	{
-    		SlicedPrices[z]=prices[z];
-    	}  
-        /////Convert//////
-        double[] doubleValues = Arrays.stream(SlicedPrices)
-                    .mapToDouble(Double::parseDouble)
-                    .toArray();
-        //////sort/////
-        Arrays.sort(doubleValues);
-        //////test///////
-        for (double doubleValue : doubleValues)
-        {
-        	 System.out.println(doubleValue);
-        }
+    		System.out.println(++lineNo+":"+line);
+    	};
+    	
+    	
     }
-    
-    double create_vat(double cost, double vat)
-    {
-    	return cost*vat;
-    }
-    
     static private boolean prompt()
     {
         System.out.print("enter next price:");
